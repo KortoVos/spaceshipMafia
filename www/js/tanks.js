@@ -1,7 +1,7 @@
 var DEBUG = true;
 var INTERVAL = 50;
 var ROTATION_SPEED = 5;
-var ARENA_MARGIN = 30;
+var ARENA_MARGIN = 50;
 
 var localTank;
 
@@ -163,7 +163,7 @@ Game.prototype = {
 		//Render balls
 		game.$arena.find('.cannon-ball').remove();
 		serverData.balls.forEach( function(serverBall){
-			var b = new Ball(serverBall.id, serverBall.ownerId, game.$arena, serverBall.x, serverBall.y);
+			var b = new Ball(serverBall.id,serverBall.ownerId, game.$arena, serverBall.x, serverBall.y,serverBall.alpha * (180 / Math.PI));
 			
 			b.exploding = serverBall.exploding;
 			if(b.exploding){
@@ -182,13 +182,13 @@ Game.prototype = {
 	}
 }
 
-function Ball(id, ownerId, $arena, x, y){
+function Ball(id, ownerId, $arena, x, y,baseAngle){
 	this.id = id;
 	this.ownerId = ownerId;
 	this.$arena = $arena;
 	this.x = x;
 	this.y = y;
-
+	this.baseAngle = baseAngle;
 	this.materialize();
 }
 
@@ -197,6 +197,11 @@ Ball.prototype = {
 	materialize: function(){
 		this.$arena.append('<div id="' + this.id + '" class="cannon-ball" style="left:' + this.x + 'px"></div>');
 		this.$body = $('#' + this.id);
+
+		this.$body.css('-webkit-transform', 'rotateZ(' + this.baseAngle + 'deg)');
+		this.$body.css('-moz-transform', 'rotateZ(' + this.baseAngle + 'deg)');
+		this.$body.css('-o-transform', 'rotateZ(' + this.baseAngle + 'deg)');
+		this.$body.css('transform', 'rotateZ(' + this.baseAngle + 'deg)');
 
 		if(localTank != undefined){
 			this.$body.css('left',this.x - localTank.x  + WIDTH/2 + 'px');
@@ -360,6 +365,7 @@ Tank.prototype = {
 			t.setCannonAngle();
 		}).click( function(){
 			t.shoot();
+			
 		});
 
 	},
@@ -485,19 +491,21 @@ Tank.prototype = {
 		if(this.dead){
 			return;
 		}
+		var audio = new Audio('../assets/sound/biggun2.wav');
+			audio.play();
 
 		//Emit ball to server
 		var serverBall = {};
 		//Just for local balls who have owner
 		serverBall.alpha = this.cannonAngle * Math.PI / 180; //angle of shot in radians
 		//Set init position
-		var cannonLength = 60;
+		var cannonLength = 40;
 		var deltaX = cannonLength * Math.sin(serverBall.alpha);
 		var deltaY = cannonLength * Math.cos(serverBall.alpha);
 
 		serverBall.ownerId = this.id;
-		serverBall.x = this.x + deltaX - 5;
-		serverBall.y = this.y - deltaY - 5;
+		serverBall.x = this.x + deltaX ;
+		serverBall.y = this.y - deltaY ;
 
 		this.game.socket.emit('shoot', serverBall);
 	}

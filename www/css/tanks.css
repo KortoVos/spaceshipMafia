@@ -39,10 +39,13 @@ body{
 .tank-cannon{
 	position: absolute;
 	top: 30px;
-	width: 60px;
+	left: 12px;
+	width: 80px;
 	height: 80px;
-	background-image: url(../img/tank-cannon.png);
-	background-position: -10px 0;
+	background-image: url(../assets/img/Firing2__000.png);
+	background-repeat: no-repeat;
+	background-size: 130% 100px;
+	background-position: -20px 0;
 	-webkit-transform-origin: 30px 65px;
 	   -moz-transform-origin: 30px 65px;
 		 -o-transform-origin: 30px 65px;
@@ -52,12 +55,13 @@ body{
 .cannon-ball{
 	position: absolute;
 	width: 10px;
-	height: 10px;
-	-webkit-border-radius: 5px;
-	   -moz-border-radius: 5px;
-		 -o-border-radius: 5px;
-			border-radius: 5px;	
-	background-color: #5e5e5e;
+	height: 50px;
+	left: 5px;
+	top: -25px;
+	background-image: url(../assets/img/blueLaser.png);
+	background-repeat: no-repeat;
+	/*background-position: -10px 0;*/
+	background-size: 100% 50px;
 }
 
 .ball-explosion{
@@ -186,6 +190,10 @@ body{
 
 .station{
 	background-image: url(../assets/img/Alien-Spacestation.png);
+}
+
+.astroid1{
+	background-image: url(../assets/asteroids/small/a10000.png);
 }
 
 img{

@@ -1,12 +1,13 @@
 [
 		{
 			"id":"st1",
-			"type":"station",
+			"type":"astroid1",
 			"x":-110,
 			"y":-10,
 			"w":90,
 			"h":180,
-			"baseAngle":0
+			"baseAngle":0,
+			"rotationSpeed":2
 		},
 		{
 			"id":"st2",
