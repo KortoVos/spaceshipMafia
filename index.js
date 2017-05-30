@@ -11,7 +11,7 @@ var mapSize = {"w":3000,"h":3000};
 //Static resources server
 app.use(express.static(__dirname + '/www'));
 
-var server = app.listen( 8080, function () {
+var server = app.listen( LOCAL_PORT, function () {
 	var port = server.address().port;
 	console.log('Server running at port %s', port);
 });
