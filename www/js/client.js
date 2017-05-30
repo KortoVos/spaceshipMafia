@@ -1,5 +1,8 @@
-var WIDTH = 1200;
-var HEIGHT = 800;
+var WIDTH = $(window).width();
+var HEIGHT = $(window).height();
+
+var mapSize = {"w":3000,"h":3000};
+
 // This IP is hardcoded to my server, replace with your own
 var socket = io.connect('192.168.178.53');
 var game = new Game('#arena', WIDTH, HEIGHT, socket);

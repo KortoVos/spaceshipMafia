@@ -5,6 +5,8 @@ var BALL_SPEED = 15;
 var WIDTH = 1200;
 var HEIGHT = 800;
 var TANK_INIT_HP = 100;
+var mapSize = {"w":3000,"h":3000};
+
 
 //Static resources server
 app.use(express.static(__dirname + '/www'));
@@ -20,11 +22,68 @@ function GameServer(){
 	this.tanks = [];
 	this.balls = [];
 	this.lastBallId = 0;
-	this.objects = require('./objects.json');
+	this.objects = []; //require('./objects.json');
+	this.object = this.mapBoarderObjects();
 	console.log(this.objects);
+	console.log(this.objects.length)
 }
 
+
+
 GameServer.prototype = {
+
+	mapBoarderObjects: function(){
+		objectTypes = require('./objectTypes.json');
+		console.log(objectTypes)
+		var i = 0;
+		while(i < mapSize.w){
+			this.objects.push({
+				"id":getRandomID(),
+				"type":objectTypes[getRandomInt(0,6)],
+				"x":i +  getRandomInt(5,10),
+				"y":-100 - getRandomInt(0,100),
+				"w":90,
+				"h":180,
+				"baseAngle":getRandomInt(0,360),
+				"rotationSpeed":2
+			});
+			this.objects.push({
+				"id":getRandomID(),
+				"type":objectTypes[getRandomInt(0,6)],
+				"x":i +  getRandomInt(0,10),
+				"y":mapSize.h + getRandomInt(0,50),
+				"w":90,
+				"h":180,
+				"baseAngle":getRandomInt(0,360),
+				"rotationSpeed":2
+			})
+			i += getRandomInt(50,100)
+		}
+		i = 0;
+		while(i < mapSize.h){
+			this.objects.push({
+				"id":getRandomID(),
+				"type":objectTypes[getRandomInt(0,6)],
+				"x":-10 - getRandomInt(0,20),
+				"y":i +  getRandomInt(5,10),
+				"w":90,
+				"h":180,
+				"baseAngle":getRandomInt(0,360),
+				"rotationSpeed":2
+			});
+			this.objects.push({
+				"id":getRandomID(),
+				"type":objectTypes[getRandomInt(0,6)],
+				"x": mapSize.w + getRandomInt(0,50),
+				"y": i +  getRandomInt(0,10),
+				"w":90,
+				"h":180,
+				"baseAngle":getRandomInt(0,360),
+				"rotationSpeed":2
+			})
+			i += getRandomInt(50,100)
+		}
+	},
 
 	addTank: function(tank){
 		this.tanks.push(tank);
@@ -59,8 +118,8 @@ GameServer.prototype = {
 		this.balls.forEach( function(ball){
 			self.detectCollision(ball);
 
-			if(ball.x < 0|| ball.x > WIDTH
-				|| ball.y < 0 || ball.y > HEIGHT){
+			if(ball.x < 0|| ball.x > mapSize.w
+				|| ball.y < 0 || ball.y > mapSize.h){
 
 				ball.out = true;
 			}else{
@@ -89,12 +148,12 @@ GameServer.prototype = {
 		tank.hp -= 2;
 	},
 
-	getData: function(){
+	getData: function(tank){
 		var gameData = {};
 		gameData.tanks = this.tanks;
 		gameData.balls = this.balls;
 		gameData.objects = this.objects;
-
+		//console.log("object Count: "+gameData.objects.length)
 		return gameData;
 	},
 
@@ -143,8 +202,8 @@ io.on('connection', function(client) {
 		//update ball positions
 		game.syncBalls();
 		//Broadcast data to clients
-		client.emit('sync', game.getData());
-		client.broadcast.emit('sync', game.getData());
+		client.emit('sync', game.getData(data.tank));
+		client.broadcast.emit('sync', game.getData(data.tank));
 
 		//I do the cleanup after sending data, so the clients know
 		//when the tank dies and when the balls explode
@@ -190,4 +249,8 @@ Ball.prototype = {
 
 function getRandomInt(min, max) {
 	return Math.floor(Math.random() * (max - min)) + min;
+}
+
+function getRandomID() {
+	return Math.random().toString(36).substr(2, 20);
 }

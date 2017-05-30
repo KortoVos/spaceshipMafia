@@ -16,8 +16,9 @@ body{
 }
 
 .arena{
-	margin: 10px auto;
+	margin: 0px auto;
 	background-image: url(../img/bg5.jpg);
+	background-size: 100%;
 	position: relative;
 	pointer-events: none;
 }
@@ -192,8 +193,28 @@ body{
 	background-image: url(../assets/img/Alien-Spacestation.png);
 }
 
-.astroid1{
+.astroids1{
 	background-image: url(../assets/asteroids/small/a10000.png);
+}
+
+.astroidm1{
+	background-image: url(../assets/asteroids/medium/a10001.png);
+}
+.astroidm2{
+	background-image: url(../assets/asteroids/medium/a10002.png);
+}
+.astroidm3{
+	background-image: url(../assets/asteroids/medium/a10003.png);
+}
+.astroidm4{
+	background-image: url(../assets/asteroids/medium/a10004.png);
+}
+.astroidm5{
+	background-image: url(../assets/asteroids/medium/a10005.png);
+}
+
+.ironAstroid{
+	background-image: url(../assets/asteroids/medium/b40002.png);
 }
 
 img{

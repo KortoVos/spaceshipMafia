@@ -125,7 +125,10 @@ Game.prototype = {
 
 	receiveData: function(serverData){
 		var game = this;
-
+		serverData.tanks = serverData.tanks.filter(o => (Math.abs(o.x - localTank.x)<=WIDTH-450 && Math.abs(o.y - localTank.y)<=HEIGHT-250));
+		serverData.balls = serverData.balls.filter(o => (Math.abs(o.x - localTank.x)<=WIDTH-450 && Math.abs(o.y - localTank.y)<=HEIGHT-250));
+		serverData.objects = serverData.objects.filter(o => (Math.abs(o.x - localTank.x)<=WIDTH-450 && Math.abs(o.y - localTank.y)<=HEIGHT-250));
+		
 		serverData.tanks.forEach( function(serverTank){
 
 			//Update local tank stats
@@ -392,10 +395,10 @@ Tank.prototype = {
 		moveX = this.speed * moveX;
 		moveY = this.speed * moveY;
 
-		if(this.x + moveX > (0 + ARENA_MARGIN) && (this.x + moveX) < (this.$arena.width() - ARENA_MARGIN)){
+		if(this.x + moveX > (0 + ARENA_MARGIN) && (this.x + moveX) < (mapSize.w - ARENA_MARGIN)){
 			this.x += moveX;
 		}
-		if(this.y + moveY > (0 + ARENA_MARGIN) && (this.y + moveY) < (this.$arena.height() - ARENA_MARGIN)){
+		if(this.y + moveY > (0 + ARENA_MARGIN) && (this.y + moveY) < (mapSize.h - ARENA_MARGIN)){
 			this.y += moveY;
 		}
 		this.rotateBase();
