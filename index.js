@@ -6,12 +6,13 @@ var WIDTH = 1200;
 var HEIGHT = 800;
 var TANK_INIT_HP = 100;
 var mapSize = {"w":3000,"h":3000};
+var server_port = process.env.OPENSHIFT_NODEJS_PORT || 8080
 
 
 //Static resources server
 app.use(express.static(__dirname + '/www'));
 
-var server = app.listen( LOCAL_PORT, function () {
+var server = app.listen( server_port, function () {
 	var port = server.address().port;
 	console.log('Server running at port %s', port);
 });
