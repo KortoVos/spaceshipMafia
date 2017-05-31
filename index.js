@@ -14,11 +14,19 @@ var server_ip_address = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1';
 //Static resources server
 app.use(express.static(__dirname + '/www'));
 
+app.get('/', function (req, res) {
+
+      res.send('hello world');
+
+  
+});
+
 var server = app.listen( server_port,server_ip_address, function () {
 	var port = server.address().port;
 	console.log('Server running at port %s', port);
 });
 
+/*
 var io = require('socket.io')(server);
 
 function GameServer(){
@@ -182,9 +190,9 @@ GameServer.prototype = {
 }
 
 var game = new GameServer();
-
+*/
 /* Connection events */
-
+/*
 io.on('connection', function(client) {
 
 	client.on('joinGame', function(tank){
@@ -257,3 +265,5 @@ function getRandomInt(min, max) {
 function getRandomID() {
 	return Math.random().toString(36).substr(2, 20);
 }
+
+*/
