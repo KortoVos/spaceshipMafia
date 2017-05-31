@@ -2,10 +2,14 @@
   "name": "tanks",
   "version": "1.0.0",
   "description": "Tanks tutorial for web sockets",
-  "main": "app.js",
+  "main": "index.js",
+  "engine": {
+    "node": "*",
+    "npm": "*"
+  },
   "scripts": {
     "start" : "node index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "who needs test..."
   },
   "repository": {
     "type": "git",
