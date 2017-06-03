@@ -7,7 +7,7 @@ Object.assign=require('object-assign');
 
 app.engine('html', require('ejs').renderFile);
 app.use(morgan('combined'))
-app.use(express.static('public'));
+//app.use(express.static('public'));
 
 
 /*var counter = 0;
@@ -24,7 +24,8 @@ var port = process.env.PORT || process.env.OPENSHIFT_NODEJS_PORT || 8080,
 
 
 app.get('/', function (req, res) {
-  res.render('index.html', {});
+  //res.render('index.html', {});
+  res.send('{ test 55 }');
 });
 
 app.get('/pagecount', function (req, res) {
