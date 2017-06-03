@@ -22,5 +22,5 @@
     "start" : "node server.js"
   },
   "author": "Ruben Torres",
-  "license": "MIT",
+  "license": "MIT"
 }
