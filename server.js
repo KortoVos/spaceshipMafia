@@ -46,7 +46,7 @@ module.exports = app ;
 
 
 var io = require('socket.io')(server);
-/*
+
 function GameServer(){
 	this.tanks = [];
 	this.balls = [];
@@ -208,9 +208,9 @@ GameServer.prototype = {
 }
 
 var game = new GameServer();
-*/
+
 /* Connection events */
-/*
+
 io.on('connection', function(client) {
 
 	client.on('joinGame', function(tank){
@@ -284,4 +284,3 @@ function getRandomID() {
 	return Math.random().toString(36).substr(2, 20);
 }
 
-*/
