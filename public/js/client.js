@@ -4,7 +4,10 @@ var HEIGHT = $(window).height();
 var mapSize = {"w":3000,"h":3000};
 
 // This IP is hardcoded to my server, replace with your own
-var socket = io.connect('192.168.178.53');
+var port = 80,
+    ip   = '127.0.0.1';
+
+var socket = io.connect(ip);
 var game = new Game('#arena', WIDTH, HEIGHT, socket);
 var selectedTank = 1;
 var tankName = '';
