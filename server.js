@@ -10,15 +10,15 @@ app.use(morgan('combined'))
 app.use(express.static('public'));
 
 
-/*var counter = 0;
+var counter = 0;
 var BALL_SPEED = 15;
 var WIDTH = 1200;
 var HEIGHT = 800;
 var TANK_INIT_HP = 100;
 var mapSize = {"w":3000,"h":3000};
-*/
-var port = process.env.PORT || process.env.OPENSHIFT_NODEJS_PORT || 8080,
-    ip   = process.env.IP   || process.env.OPENSHIFT_NODEJS_IP || '0.0.0.0',
+
+var port = process.env.PORT || process.env.OPENSHIFT_NODEJS_PORT || 80,
+    ip   = process.env.IP   || process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1',
     mongoURL = process.env.OPENSHIFT_MONGODB_DB_URL || process.env.MONGO_URL,
     mongoURLLabel = "";
 
@@ -38,14 +38,15 @@ app.use(function(err, req, res, next){
 });
 
 
-app.listen(port, ip);
-console.log('Server running on http://%s:%s', ip, port);
+var server = app.listen(port, ip, function () {
+	console.log('Server running on http://%s:%s', ip, port);
+});
 
 module.exports = app ;
 
-/*
-var io = require('socket.io')(server);
 
+var io = require('socket.io')(server);
+/*
 function GameServer(){
 	this.tanks = [];
 	this.balls = [];
